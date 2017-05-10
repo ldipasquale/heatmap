@@ -20,11 +20,14 @@ export default class Home extends React.Component {
           url='http://localhost:8080/assets/images/ads/300x250.jpg'
           width={300}
           height={250}
-          pointStyle={{
-            opacity: 0.03,
-          }}
-          overlay={true}
           points={csv300250}
+          style={{
+            overlay: 0.8,
+          }}
+          pointStyle={{
+            color: '#eb2c12',
+            opacity: 0.06,
+          }}
         />
       </div>
     );

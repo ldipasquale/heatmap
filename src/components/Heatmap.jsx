@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Color from 'Color';
 
 const styles = {
   container: {
@@ -41,7 +42,7 @@ class Heatmap extends React.Component {
       this.drawBackground();
     }
 
-    if (this.props.overlay) {
+    if (this.props.style.overlay) {
       this.drawOverlay();
     }
 
@@ -62,15 +63,17 @@ class Heatmap extends React.Component {
   }
 
   drawOverlay() {
-    this.context.fillStyle = 'rgba(0, 0, 0, .6)';
+    this.context.fillStyle = `rgba(0, 0, 0, ${this.props.style.overlay})`;
     this.context.fillRect(0, 0, this.props.width, this.props.height);
   }
 
   drawPoints() {
+    const color = Color(this.props.pointStyle.color).alpha(this.props.pointStyle.opacity);
+
     this.props.points.map(point => {
       this.context.beginPath();
       this.context.arc(point.touchX * point.deviceWidth, point.touchY * point.deviceHeight, 5, 0, 2 * Math.PI);
-      this.context.fillStyle = `rgba(230, 60, 37, ${this.props.pointStyle.opacity})`;
+      this.context.fillStyle = `rgba(${color.values.rgb[0]}, ${color.values.rgb[1]}, ${color.values.rgb[2]}, ${color.values.alpha})`;
       this.context.fill();
       this.context.strokeStyle = 'transparent';
       this.context.stroke();
@@ -94,8 +97,11 @@ class Heatmap extends React.Component {
 
 Heatmap.propTypes = {
   url: PropTypes.string,
-  overlay: PropTypes.bool,
+  style: PropTypes.shape({
+    overlay: PropTypes.number,
+  }),
   pointStyle: PropTypes.shape({
+    color: PropTypes.string,
     opacity: PropTypes.number,
   }),
   width: PropTypes.number.isRequired,
@@ -108,8 +114,11 @@ Heatmap.propTypes = {
 
 Heatmap.defaultProps = {
   url: null,
-  overlay: false,
+  style: {
+    overlay: 0,
+  },
   pointStyle: {
+    color: '#eb2c12',
     opacity: 0.03,
   },
 };
