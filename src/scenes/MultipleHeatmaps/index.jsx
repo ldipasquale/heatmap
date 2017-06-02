@@ -47,8 +47,8 @@ export default class MultipleHeatmaps extends React.Component {
               key={ad.id}
               id={ad.id}
               points={ad.points}
-              width={adDimension.w}
-              height={adDimension.h}
+              width={ad.width}
+              height={ad.height}
             />
           </div>
         ))}
