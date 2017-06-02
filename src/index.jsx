@@ -1,6 +1,6 @@
 /* eslint-env browser */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './scenes/Home/Home';
+import MultipleHeatmaps from './scenes/MultipleHeatmaps';
 
-ReactDOM.render(<Home />, document.getElementById('root'));
+ReactDOM.render(<MultipleHeatmaps />, document.getElementById('root'));
