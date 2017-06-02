@@ -5,7 +5,7 @@ import ReactRegionSelect from 'react-region-select';
 
 import Heatmap from 'components/Heatmap';
 
-import csv from 'data/20170501_20170601_guido.csv';
+import csv from 'data/2070529_20170531_variations.csv';
 
 export default class MultipleHeatmaps extends React.Component {
   constructor(props) {
