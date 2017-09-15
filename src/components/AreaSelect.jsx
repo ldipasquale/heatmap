@@ -30,10 +30,11 @@ class AreaSelect extends React.Component {
     this.target.onmousedown = e => {
       isCancelled = false;
 
-      this.element.style.opacity = '1';
       xFrom = e.clientX;
       yFrom = e.clientY;
       calcArea();
+
+      setTimeout(() => this.element.style.opacity = '1', 100);
     };
 
     this.target.onmousemove = e => {
@@ -47,13 +48,20 @@ class AreaSelect extends React.Component {
     this.target.onmouseup = e => {
       isCancelled = true;
 
+      this.element.style.opacity = '0';
+
+      const xMin = Math.min(xFrom, xTo);
+      const xMax = Math.max(xFrom, xTo);
+      const yMin = Math.min(yFrom, yTo);
+      const yMax = Math.max(yFrom, yTo);
+
       this.props.onSelect({
-        x: xFrom / this.props.width,
-        y: yFrom / this.props.height,
+        x: xMin / this.props.width,
+        y: yMin / this.props.height,
       },
       {
-        x: xTo / this.props.width, 
-        y: yTo / this.props.height,
+        x: xMax / this.props.width, 
+        y: yMax / this.props.height,
       });
     };
   }
@@ -70,11 +78,9 @@ class AreaSelect extends React.Component {
       >
         <div
           style={{
-            border: '1px solid #fff',
-            background: 'rgba(255, 255, 255, .3)',
+            background: 'rgba(0, 162, 255, 0.4)',
             position: 'absolute',
             top: '0',
-            borderRadius: '5px',
             left: '0',
             zIndex: '1',
             opacity: '0',

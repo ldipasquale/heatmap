@@ -17,9 +17,22 @@ const styles = {
   },
 };
 
+const getTotalFromPoints = (points, key) => {
+  return points.reduce((accumulator, point) => {
+    if (point[key]) {
+      return accumulator + parseInt(point[key]);
+    }
+
+    return accumulator;
+  }, 0);  
+}
+
 class Heatmap extends React.Component {
   constructor(props) {
     super(props);
+
+    this.totalClicks = getTotalFromPoints(props.points, 'clicks');
+    this.totalInstalls = getTotalFromPoints(props.points, 'installs');
 
     this.calculateMetricsOnArea = this.calculateMetricsOnArea.bind(this);
 
@@ -54,12 +67,27 @@ class Heatmap extends React.Component {
       );
     });
 
-    const clicks = points.reduce((accumulator, point) => accumulator + parseInt(point.clicks), 0);
-    const installs = points.reduce((accumulator, point) => accumulator + parseInt(point.installs), 0);
+    const clicks = getTotalFromPoints(points, 'clicks');
+    const installs = getTotalFromPoints(points, 'installs');
 
-    if (clicks && installs) {
-      console.log('CVR: ' + installs / clicks * 100 + '%');
+    let clicksPercentage = 0;
+    if (this.totalClicks > 0 & clicks > 0) {
+      clicksPercentage = (clicks / this.totalClicks).toFixed(2);
     }
+
+    console.log(`Clicks: ${clicks} (${clicksPercentage}%)`);
+
+    if (installs > 0) {
+      console.log(`Installs: ${installs} (${installsPercentage}%)`);
+      console.log('CVR: ' + installs / clicks * 100 + '%');
+
+      let installsPercentage = 0;
+      if (this.totalInstalls > 0) {
+        installsPercentage = (installs / this.totalInstalls).toFixed(2);
+      }
+    }
+
+    console.log('-----------------');
   }
 
   drawHeatmap() {
@@ -194,10 +222,22 @@ Heatmap.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   points: PropTypes.arrayOf(PropTypes.shape({
-    clicks: PropTypes.string.isRequired,
-    installs: PropTypes.string,
-    touchX: PropTypes.string.isRequired,
-    touchY: PropTypes.string.isRequired,
+    clicks: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    installs: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    touchX: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    touchY: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
   })).isRequired,
 };
 
@@ -205,12 +245,12 @@ Heatmap.defaultProps = {
   id: null,
   url: null,
   style: {
-    overlay: 0.8,
+    overlay: 1,
   },
   clickStyle: {
     color: '#eb2c12',
-    radius: 4,
-    opacity: 0.9,
+    radius: 8,
+    opacity: 0.015,
   },
   installStyle: {
     color: '#12c742',

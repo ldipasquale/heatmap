@@ -1,11 +1,7 @@
 const path = require('path');
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './src/index.html',
-  filename: 'index.html',
-  inject: 'body'
-})
 
 module.exports = {
   entry: './src/index.jsx',
@@ -81,13 +77,22 @@ module.exports = {
   },
   resolve: {
     alias: {
-      components: path.resolve(__dirname, 'src/components/'),
-      data: path.resolve(__dirname, 'src/data/'),
       assets: path.resolve(__dirname, 'assets/'),
+      components: path.resolve(__dirname, 'src/components/'),
+      config: path.resolve(__dirname, 'src/config/'),
+      data: path.resolve(__dirname, 'src/data/'),
+      pages: path.resolve(__dirname, 'src/pages/'),
     },
     extensions: [".jsx", ".js"],
   },
   plugins: [
-    HtmlWebpackPluginConfig
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
+    new CopyWebpackPlugin([{
+      from: './src/static',
+    }]),
   ],
 }

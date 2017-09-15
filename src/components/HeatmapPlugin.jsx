@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import HeatmapJS from 'heatmap.js';
 
 const styles = {
@@ -50,11 +51,11 @@ class Heatmap extends React.Component {
 }
 
 Heatmap.propTypes = {
-  width: React.PropTypes.number.isRequired,
-  height: React.PropTypes.number.isRequired,
-  points: React.PropTypes.arrayOf(React.PropTypes.shape({
-    touchX: React.PropTypes.string.isRequired,
-    touchY: React.PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  points: PropTypes.arrayOf(PropTypes.shape({
+    touchX: PropTypes.string.isRequired,
+    touchY: PropTypes.string.isRequired,
   })).isRequired,
 };
 

@@ -8,6 +8,7 @@
     "arrow-parens": "off",
     "no-return-assign": "off",
     "max-len": "off",
-    "array-callback-return": "off"
+    "no-confusing-arrow": 0,
+    "array-callback-return": "off",
   }
 }
