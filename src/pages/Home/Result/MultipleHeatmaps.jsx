@@ -13,7 +13,7 @@ class MultipleHeatmaps extends React.Component {
   componentWillMount() {
     const adIds = {};
 
-    this.props.dataSource.map(point => {
+    this.props.dataSource.forEach(point => {
       if (typeof adIds[point.creative_id] === 'undefined') {
         this.ads.push({
           id: point.creative_id,
@@ -23,7 +23,7 @@ class MultipleHeatmaps extends React.Component {
         });
 
         adIds[point.creative_id] = this.ads.length - 1;
-      } else if (!adIds[point.creative_id].width && point.width !== null) {
+      } else if (isNaN(this.ads[adIds[point.creative_id]].width) && point.width !== null) {
         this.ads[adIds[point.creative_id]].width = parseInt(point.width, 10);
         this.ads[adIds[point.creative_id]].height = parseInt(point.height, 10);
       }
@@ -40,7 +40,7 @@ class MultipleHeatmaps extends React.Component {
   render() {
     return (
       <div>
-        {this.ads.map(ad => (
+        {this.ads.filter(ad => ad.id !== '').map(ad => (
           <div
             key={ad.id}
             style={{ display: 'inline-block' }}

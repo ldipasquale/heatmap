@@ -5,11 +5,11 @@ export default {
   clickStyle: {
     color: '#eb2c12',
     radius: 4,
-    opacity: 0.4,
+    opacity: 0.6,
   },
   installStyle: {
     color: '#12c742',
-    radius: 4,
-    opacity: 0.3,
+    radius: 6,
+    opacity: 0.5,
   },
 };

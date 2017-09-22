@@ -11,8 +11,6 @@ const styles = {
   container: {
     background: '#222',
     position: 'relative',
-    overflow: 'hidden',
-    display: 'inline-block',
     verticalAlign: 'top',
   },
 };
@@ -178,28 +176,35 @@ class Heatmap extends React.Component {
 
   render() {
     return (
-      <div
-        style={Object.assign(styles.container, {
-          width: this.props.width,
-          height: this.props.height,
-          margin: '1px',
-        })}
-      >
-        <AreaSelect
-          width={this.props.width}
-          height={this.props.height}
-          onSelect={this.calculateMetricsOnArea}
+      <div>
+        <div>
+          <strong>Creative ID {this.props.id}:</strong>
+        </div>
+
+        <div
+          style={Object.assign(styles.container, {
+            width: this.props.width,
+            height: this.props.height,
+            margin: '1px',
+            marginBottom: '20px',
+          })}
         >
-          <canvas
-            ref={element => this.canvas = element}
+          <AreaSelect
             width={this.props.width}
             height={this.props.height}
-            style={Object.assign(styles.container, {
-              width: this.props.width,
-              height: this.props.height,
-            })}
-          />
-        </AreaSelect>
+            onSelect={this.calculateMetricsOnArea}
+          >
+            <canvas
+              ref={element => this.canvas = element}
+              width={this.props.width}
+              height={this.props.height}
+              style={Object.assign(styles.container, {
+                width: this.props.width,
+                height: this.props.height,
+              })}
+            />
+          </AreaSelect>
+        </div>
       </div>
     );
   }
